@@ -4,10 +4,29 @@ import random
 import json
 import os
 
-# Import images
+def create_new_image():
+    new_image = {}
+    new_image["Background"] = random.choices(backgrounds, backgrounds_weights)[0]
+    new_image["Eye"] = random.choices(eyes, eyes_weights)[0]
+    new_image["Skin"] = random.choices(skins, skins_weights)[0]
+    new_image["Mouth"] = random.choices(mouths, mouths_weights)[0]
+    new_image["Tie"] = random.choices(ties, ties_weights)[0]
+    new_image["Skeleton"] = random.choices(skeletons, skeletons_weights)[0]
+
+    if new_image in all_images:
+        return create_new_image()
+    else:
+        return new_image
+
+# Returns true if all images are unique
+def all_images_unique(all_images):
+    seen = list()
+    return not any(i in seen or seen.append(i) for i in all_images)
+
+
 # Change image color
-# Save the changed colored images
 # Save different max and min sizes of body parts
+
 
 # Each image is made up a series of traits
 # The weightings for each trait drive the rarity and add up to 100%
@@ -78,30 +97,11 @@ TOTAL_IMAGES = 47
 
 all_images = []
 
-def create_new_image():
-    new_image = {}
-    new_image["Background"] = random.choices(backgrounds, backgrounds_weights)[0]
-    new_image["Eye"] = random.choices(eyes, eyes_weights)[0]
-    new_image["Skin"] = random.choices(skins, skins_weights)[0]
-    new_image["Mouth"] = random.choices(mouths, mouths_weights)[0]
-    new_image["Tie"] = random.choices(ties, ties_weights)[0]
-    new_image["Skeleton"] = random.choices(skeletons, skeletons_weights)[0]
-
-    if new_image in all_images:
-        return create_new_image()
-    else:
-        return new_image
-
 
 # Generate the unique combinations based on trait weightings
 for i in range(TOTAL_IMAGES):
     new_trait_image = create_new_image()
     all_images.append(new_trait_image)
-
-# Returns true if all images are unique
-def all_images_unique(all_images):
-    seen = list()
-    return not any(i in seen or seen.append(i) for i in all_images)
 
 
 print("Are all images unique?", all_images_unique(all_images))
