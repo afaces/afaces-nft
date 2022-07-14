@@ -1,8 +1,10 @@
 from PIL import Image
 from IPython.display import display
+import shutil
 import random
 import json
 import os
+
 
 def create_new_image():
     new_image = {}
@@ -71,11 +73,12 @@ mouths_count = {}
 for mo in mouths:
     mouths_count[mo] = 0
 
-ties = ["Red", "Yellow"]
-ties_weights = [90, 10]
+ties = ["Red", "Yellow", "Green"]
+ties_weights = [90, 6, 4]
 ties_files = {
     "Red": "ti_red",
     "Yellow": "ti_yellow",
+    "Green": "ti_green",
 }
 ties_count = {}
 for ti in ties:
@@ -129,7 +132,7 @@ print(ties_count)
 print(skeletons_count)
 
 #### Generate Images
-
+shutil.rmtree("./output")
 os.mkdir(f'./output')
 
 for item in all_images:
@@ -152,3 +155,4 @@ for item in all_images:
     rgb_im = com5.convert('RGB')
     file_name = str(item["tokenId"]) + ".png"
     rgb_im.save("./output/" + file_name)
+
