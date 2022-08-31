@@ -42,6 +42,9 @@ def formatList(text):
         output += '{} '.format(t)
     return output.split('\n')
 
+def formatGithubList(owner, name, path, branch):
+    return formatList(getRawText(getGitHubRawTextURL(owner, name, path, branch)))
+
 
 lines = str(scrapeSiteText("https://en.wikipedia.org/wiki/List_of_Spanish_painters").split('\n')).split('Contents:')[1][200:20050].split('\n')
 lines = lines[0].split(" ', ' ")[:-1]
@@ -62,12 +65,16 @@ for i in lines3:
         if i % 2:
             britishFamousPaintings.append(text[i].split("(")[0])
 
+owner = "pharmapsychotic"
+project = "clip-interrogator"
+branch = "main"
 
-artists, flavors, mediums, movements = formatList(getRawText(getGitHubRawTextURL("pharmapsychotic", "clip-interrogator", "data/artists.txt", "main"))),\
-                                       formatList(getRawText(getGitHubRawTextURL("pharmapsychotic", "clip-interrogator", "data/flavors.txt", "main"))),\
-                                       formatList(getRawText(getGitHubRawTextURL("pharmapsychotic", "clip-interrogator", "data/mediums.txt", "main"))),\
-                                       formatList(getRawText(getGitHubRawTextURL("pharmapsychotic", "clip-interrogator", "data/movements.txt", "main")))
+artists, flavors, mediums, movements = formatGithubList(owner, project, "data/artists.txt", branch),\
+                                       formatGithubList(owner, project, "data/flavors.txt", branch),\
+                                       formatGithubList(owner, project, "data/mediums.txt", branch),\
+                                       formatGithubList(owner, project, "data/movements.txt", branch)
 
-for britishFamousPainting in britishFamousPaintings:
+'''for britishFamousPainting in britishFamousPaintings:
     for spanishPainter in spanishPainters:
-        print(britishFamousPainting[:-2] + " by " + spanishPainter)
+        print(britishFamousPainting[:-2] + " by " + spanishPainter)'''
+
