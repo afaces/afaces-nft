@@ -42,6 +42,7 @@ def formatList(text):
         output += '{} '.format(t)
     return output.split('\n')
 
+
 def formatGithubList(owner, name, path, branch):
     return formatList(getRawText(getGitHubRawTextURL(owner, name, path, branch)))
 
@@ -76,5 +77,6 @@ artists, flavors, mediums, movements = formatGithubList(owner, project, "data/ar
 
 '''for britishFamousPainting in britishFamousPaintings:
     for spanishPainter in spanishPainters:
-        print(britishFamousPainting[:-2] + " by " + spanishPainter)'''
+        print(britishFamousPainting[:-2] + " by " + spanishPainter)
+'''
 
