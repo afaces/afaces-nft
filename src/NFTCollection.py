@@ -8,15 +8,15 @@ from CustomImage import CustomImage
 from IndexIterator import IndexIterator
 from pathlib import Path
 
-
 # Contains the necessary data and functions
 class NFTCollection:
     # Number used to increase the RGB value for each RGB iteration
     RGB_STEP = 64
+    DEFAULT_INPUT = (253, 253, 253)
 
     # Generate the list of trait names from the names of the folder inside self.DATA_FOLDER_PATH and initializes
     # NFTCollection object
-    def __init__(self):
+    def __init__(self, trait_folder_names):
         # Obtain absolute path location
         # This return absolute path to the file we are running
         self.BASE_PATH = str(Path(os.path.realpath(__file__)).parent.parent)
@@ -26,7 +26,10 @@ class NFTCollection:
         self.OUTPUT_FOLDER_PATH = os.path.join(self.BASE_PATH, "out")
 
         # Initialize data
-        self.traitNameList = os.listdir(self.DATA_FOLDER_PATH)
+        if trait_folder_names is None:
+            self.traitNameList = os.listdir(self.DATA_FOLDER_PATH)
+        else:
+            self.traitNameList = trait_folder_names
         self.traitFilesVariationsDictionary = {}
 
         # Generate output file structure
@@ -48,7 +51,7 @@ class NFTCollection:
             for r in range(0, 256, self.RGB_STEP):
                 for g in range(0, 256, self.RGB_STEP):
                     for b in range(0, 256, self.RGB_STEP):
-                        current_image = CustomImage.change_color_static(current_trivial_trait_image, (255, 255, 255), (r, g, b, 0))
+                        current_image = CustomImage.change_color_static(current_trivial_trait_image, NFTCollection.DEFAULT_INPUT, (r, g, b, 0))
                         file_path = os.path.join(self.TEMPORAL_FOLDER_PATH, traitName, str(r) + "_" + str(g) + "_" + str(b) + ".png")
                         self.traitFilesVariationsDictionary[traitName].append([file_path, 1])
                         current_image.save_image(file_path)
@@ -115,7 +118,7 @@ class NFTCollection:
 
 
 if __name__ == '__main__':
-    NFTCollection = NFTCollection()
-    NFTCollection.generate_trait_files_trivial()  # NFTCollection.generate_trait_files_rgb()
+    NFTCollection = NFTCollection(['background', 'eye', 'skin', 'mouth', 'tie', 'skeleton'])
+    NFTCollection.generate_trait_files_rgb()  # NFTCollection.generate_trait_files_trivial()
     NFTCollection.compute_relative_probability()
-    NFTCollection.generate_weighted_variations(100)  # NFTCollection.generate_repeat_variations()
+    NFTCollection.generate_repeat_variations()  # NFTCollection.generate_weighted_variations(100)

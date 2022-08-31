@@ -58,6 +58,7 @@ class CustomImage:
                 im = Image.alpha_composite(im, Image.fromarray(image.image).convert('RGBA'))
         else:  # Assuming paths
             im = Image.open(images_list[0]).convert('RGBA')
+
             for image in images_list[1:]:
                 im = Image.alpha_composite(im, Image.open(image).convert('RGBA'))
 
