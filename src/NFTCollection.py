@@ -47,11 +47,16 @@ class NFTCollection:
     def generate_trait_files_rgb(self):
         for traitName in self.traitNameList:
             current_trivial_trait_image = CustomImage(os.path.join(self.DATA_FOLDER_PATH, traitName, "_.png"))
+            print("mamaaaaaaaaa:\t:", str(current_trivial_trait_image.image))
             self.traitFilesVariationsDictionary[traitName] = []
             for r in range(0, 256, self.RGB_STEP):
                 for g in range(0, 256, self.RGB_STEP):
                     for b in range(0, 256, self.RGB_STEP):
-                        current_image = CustomImage.change_color_static(current_trivial_trait_image, NFTCollection.DEFAULT_INPUT, (r, g, b, 0))
+                        #print(traitName, ":\t", (r, g, b))
+                        print("pepepe\t\t\t\t\t: ", current_trivial_trait_image.image)
+                        print("+basukoo")
+                        current_image = CustomImage.change_color_static(current_trivial_trait_image, self.DEFAULT_INPUT, (r, g, b))
+                        #print("olapepee:\t\t\n\t",str(current_image.image))
                         file_path = os.path.join(self.TEMPORAL_FOLDER_PATH, traitName, str(r) + "_" + str(g) + "_" + str(b) + ".png")
                         self.traitFilesVariationsDictionary[traitName].append([file_path, 1])
                         current_image.save_image(file_path)
@@ -118,7 +123,15 @@ class NFTCollection:
 
 
 if __name__ == '__main__':
+    #NFTCollection = NFTCollection(['background', 'eye', 'skin', 'mouth', 'tie', 'skeleton'])
+    #createImage = CustomImage(NFTCollection.DATA_FOLDER_PATH + "/background/_.png")
+    #CustomImage.change_color_static(createImage, (253, 253, 253), (150, 50, 150)).save_image(NFTCollection.OUTPUT_FOLDER_PATH + "/test3.png")
+    #createImage.change_color((253, 253, 253), (150, 50, 150))
+    #createImage.save_image(NFTCollection.OUTPUT_FOLDER_PATH + "/test2.png")
+
     NFTCollection = NFTCollection(['background', 'eye', 'skin', 'mouth', 'tie', 'skeleton'])
+    print("GENERATE RGB TMP FILES")
     NFTCollection.generate_trait_files_rgb()  # NFTCollection.generate_trait_files_trivial()
+    print("SUCCESS :)")
     NFTCollection.compute_relative_probability()
     NFTCollection.generate_repeat_variations()  # NFTCollection.generate_weighted_variations(100)

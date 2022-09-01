@@ -29,16 +29,15 @@ class CustomImage:
     @staticmethod
     # Changes the color of the received image
     def change_color_static(custom_image, rgb_pick, rgb_substitute):
+        print(custom_image.image, "\t\n\n\n\n\tXDDD")
         r1, g1, b1 = rgb_pick[0], rgb_pick[1], rgb_pick[2]  # Original value
         r2, g2, b2 = rgb_substitute[0], rgb_substitute[1], rgb_substitute[2]  # Value that we want to replace it with
 
-        custom_image_array = custom_image.image
-        red, green, blue = custom_image_array[:, :, 0], custom_image_array[:, :, 1], custom_image_array[:, :, 2]
+        red, green, blue = custom_image.image[:, :, 0], custom_image.image[:, :, 1], custom_image.image[:, :, 2]
         mask = (red == r1) & (green == g1) & (blue == b1)
-        custom_image_array[:, :, :3][mask] = [r2, g2, b2]
+        custom_image.image[:, :, :3][mask] = [r2, g2, b2]
 
-        custom_image = CustomImage(None)
-        custom_image.image = custom_image_array
+        print(custom_image.image," olaa")
         return custom_image
 
     def do_composite(self, images_list):
