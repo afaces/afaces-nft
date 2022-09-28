@@ -90,6 +90,7 @@ artists, flavors, mediums, movements = formatGithubList(owner, project, "data/ar
 def buildStableDiffusionPrompt():
     return "test"
     
+adjectives = ["intricate"]
 
 # CHARACTERS
 faces = ["wide", "plump", "afflicted", "square", "distrustful", "sucked", "sweet", "hard", "punished", "trusting", "hardened", "sad", "expressive", "fine", "fresh", "thin", "round", "wild", "dry", "nice", "calm", "inexpressive", "jovial", "long"]
