@@ -46,7 +46,7 @@ def formatList(text):
 def formatGithubList(owner, name, path, branch):
     return formatList(getRawText(getGitHubRawTextURL(owner, name, path, branch)))
 
-
+'''
 lines = str(scrapeSiteText("https://en.wikipedia.org/wiki/List_of_Spanish_painters").split('\n')).split('Contents:')[1][200:20050].split('\n')
 lines = lines[0].split(" ', ' ")[:-1]
 
@@ -65,7 +65,7 @@ for i in lines3:
     for i in range(len(text)):
         if i % 2:
             britishFamousPaintings.append(text[i].split("(")[0])
-
+'''
 
 owner = "pharmapsychotic"
 project = "clip-interrogator"
@@ -166,13 +166,22 @@ hypernetwork, none, style, style_filewords, subject, subject_filewords = formatG
                                        formatGithubList(owner, project, "textual_inversion_templates/subject_filewords.txt", branch)[:-1]
 
 
-def createCombinations(itemsClass, n):
+def createStringCombinationsList(itemsClass, n):
     myList = []
+
+    '''
     for item in range(len(itemsClass)):
         myList.append(itemsClass[item])
-    return n
+    '''
+    return myList
 
-
+def combs(a):
+    if len(a) == 0:
+        return [[]]
+    cs = []
+    for c in combs(a[1:]):
+        cs += [c, c+[a[0]]]
+    return cs
 
 if __name__ == '__main__':
     # To create a good text input -Media, Subject, Descriptors, Artist - (cross two artists: artist A and artist B)
@@ -187,6 +196,8 @@ if __name__ == '__main__':
 
     # Artist:  by artgerm and greg rutkowski and alphonse mucha
 
+
+    '''
     file_name = ""
     prompt = input("dream>\t")
     command = ""
@@ -200,11 +211,9 @@ if __name__ == '__main__':
                 file_name = file_name.replace(' ', '_') + ".jpg"
                 print(command)
                 c += 1
-
-
-
-
-
+    '''
+    print(len(customFlavors))
+    print(len(combs([1, 2, 3, 4, 5])))
 
     '''
     file_name = ""
