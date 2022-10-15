@@ -1,4 +1,3 @@
-'''
 import requests
 from bs4 import BeautifulSoup
 
@@ -71,16 +70,19 @@ for i in lines3:
 owner = "pharmapsychotic"
 project = "clip-interrogator"
 branch = "main"
+artists = formatGithubList(owner, project, "data/artists.txt", branch)[:-1]
 
-artists, flavors, mediums, movements = formatGithubList(owner, project, "data/artists.txt", branch)[:-1],\
-                                       formatGithubList(owner, project, "data/flavors.txt", branch)[:-1],\
-                                       formatGithubList(owner, project, "data/mediums.txt", branch)[:-1],\
-                                       formatGithubList(owner, project, "data/movements.txt", branch)[:-1]
+'''
+flavors, mediums, movements = formatGithubList(owner, project, "data/flavors.txt", branch)[:-1],\ 
+                              formatGithubList(owner, project, "data/mediums.txt", branch)[:-1],\ 
+                              formatGithubList(owner, project, "data/movements.txt", branch)[:-1]
 
 for britishFamousPainting in britishFamousPaintings:
     for spanishPainter in spanishPainters:
         print(britishFamousPainting[:-2] + " by " + spanishPainter)
 '''
+
+
 
 
 extra_adjectives = ["intricate", "stunning"]
@@ -153,11 +155,63 @@ fields = ["green", "yellow", "dark", "dry", "arid", "fertile", "cultivated"]
 
 interiors = ["clean", "distinguished", "dry", "detailed", "professional", "magical", "transformative", "exciting", "visionary", "wild", "urban", "natural", "rugged", "ethereal", "earthy", "organic", "revolutionary", "dynamic", "professional", "modern", "historic", "bold", "colorful", "fascinating", "creative", "complete", "mysterious", "strong", "detailed", "focus", "fierce", "loud", "unconventional", "iconic", "raw", "tranquil", "radiant", "pleasant", "natural", "graceful", "delightful", "delicate", "timely", "free flowing", "effective", "impactful", "progressive", "naturalistic", "spontaneous", "monumental", "innovative", "soaring", "illuminating", "enlightening", "status", "international", "passionate", "leading", "earthly", "energetic", "enthusiastic", "whole", "dark", "vast", "deep", "far", "mountainous", "dim", "entire", "continental", "western", "domestic", "white", "cool", "black", "african", "northern", "hollow", "southern", "solar", "spacious", "remote", "hot", "dry", "red", "arid", "rich", "hydrophobic", "unknown", "gloomy", "warm", "beautiful", "darkened", "empty", "cavernous", "soft", "stellar", "shadowy", "like", "gothic", "eastern", "bright", "decorated", "smooth", "liquid", "lighted", "elegant", "rural", "brazilian", "rugged", "luxurious", "heated", "nuclear", "brown", "distant", "baroque", "north", "chinese", "typical", "lunar", "dutch", "magnificent", "cold", "brachial", "wild", "dorsal", "vaulted", "century", "bare", "east", "mysterious", "mexican", "ornate", "clean", "grey", "forested", "hilly", "gray", "south", "plain", "light", "alternate", "lit", "impressive"]
 
+owner = "AUTOMATIC1111"
+project = "stable-diffusion-webui"
+branch = "master"
+hypernetwork, none, style, style_filewords, subject, subject_filewords = formatGithubList(owner, project, "textual_inversion_templates/hypernetwork.txt", branch)[:-1],\
+                                       formatGithubList(owner, project, "textual_inversion_templates/none.txt", branch)[:-1],\
+                                       formatGithubList(owner, project, "textual_inversion_templates/style.txt", branch)[:-1],\
+                                       formatGithubList(owner, project, "textual_inversion_templates/subject.txt", branch)[:-1],\
+                                       formatGithubList(owner, project, "textual_inversion_templates/subject.txt", branch)[:-1],\
+                                       formatGithubList(owner, project, "textual_inversion_templates/subject_filewords.txt", branch)[:-1]
+
+
+def createCombinations(itemsClass, n):
+    myList = []
+    for item in range(len(itemsClass)):
+        myList.append(itemsClass[item])
+    return n
+
+
+
 if __name__ == '__main__':
+    # To create a good text input -Media, Subject, Descriptors, Artist - (cross two artists: artist A and artist B)
+    # P. ex: Portrait of beautiful cottagecore fantasy young blue Victorian Princess holding a flower, full body shot,
+    # intricate, elegant, highly detailed, digital painting, trending on artstation, concept art, smooth, sharp, focus,
+    # illustration, by artgerm and greg rutkowski and alphonse mucha
+
+    # Media: Portrait of
+    # Subject: beautiful cottagecore fantasy young blue Victorian Princess holding a flower
+    # Descriptors: full body shot, intricate, elegant, highly detailed, digital painting, trending on artstation,
+    # concept art, smooth, sharp, focus, illustration,
+
+    # Artist:  by artgerm and greg rutkowski and alphonse mucha
+
     file_name = ""
     prompt = input("dream>\t")
     command = ""
     c = 0
+    for medium in range(len(customMediums)):
+        for flavor in range(len(customFlavors)):
+            for artist in range(len(artists)):
+                file_name = customMediums[medium] + " " + prompt + " " + customFlavors[flavor] + " " + \
+                            artists[artist]
+                command = "stablediffusion \"" + file_name + "\""
+                file_name = file_name.replace(' ', '_') + ".jpg"
+                print(command)
+                c += 1
+
+
+
+
+
+
+    '''
+    file_name = ""
+    prompt = input("dream>\t")
+    command = ""
+    c = 0
+    
     for flavor in range(len(customFlavors)):
         for movement in range(len(customMovements)):
             for medium in range(len(customMediums)):
@@ -166,4 +220,7 @@ if __name__ == '__main__':
                 file_name = file_name.replace(' ', '_') + ".jpg"
                 #print(command)
                 c += 1
-    print(c)
+    '''
+
+
+
